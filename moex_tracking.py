@@ -38,6 +38,7 @@ def get_price(kurs_url, kurs_name):
 	return num
 
 one_more_two_flag = False
+day_open = False
 while (True):
 	t=datetime.datetime.now()
 	if(datetime.time(10, 0, 0) < datetime.time(t.hour, t.minute, t.second) < datetime.time(18, 40, 0)): # work day
@@ -47,4 +48,10 @@ while (True):
 		if(sum1 < sum2 and one_more_two_flag or sum1 > sum2 and not one_more_two_flag):
 			send_email(sum1)
 			one_more_two_flag = sum1 > sum2
+		day_open = True
 		time.sleep(REQUEST_RATE)
+	else:
+		if(day_open):
+			closed_days = [current]+closed_days
+			closed_days.pop()
+			day_open = False
