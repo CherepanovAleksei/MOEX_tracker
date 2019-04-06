@@ -13,18 +13,18 @@ closed_days = []
 import smtplib
 import requests
 import re
-import time
+import datetime
 
 def send_email(sum1):
 	title = "Intersection of charts!"
 	msg = "In "+kurs_name+" charts have intersected with average amount:"+str(sum1)+".\n\nWatch site: "+kurs_url+"\n"
-    server = smtplib.SMTP_SSL('smtp.yandex.ru', 465)
-    server.ehlo()
-    server.login(yandex_mail,yandex_pass)
-    message = 'Subject: {}\n\n{}'.format(title,msg)
-    server.sendmail(yandex_mail,send_to_email,message)
-    server.quit()
-    print('E-mails successfully sent!')
+	server = smtplib.SMTP_SSL('smtp.yandex.ru', 465)
+	server.ehlo()
+	server.login(yandex_mail,yandex_pass)
+	message = 'Subject: {}\n\n{}'.format(title,msg)
+	server.sendmail(yandex_mail,send_to_email,message)
+	server.quit()
+	print('E-mails successfully sent!')
 
 def get_price(kurs_url, kurs_name):
 	request = requests.get(kurs_url)
@@ -39,35 +39,12 @@ def get_price(kurs_url, kurs_name):
 
 one_more_two_flag = False
 while (True):
-    t=datetime.datetime.now()
-    if(datetime.time(10, 0, 0) < datetime.time(t.hour, t.minute, t.second) < datetime.time(18, 40, 0)): # work day
-	    current = get_price()
-	    sum1 = float(sum(a[:4]+current))/5
-	    sum2 = float(sum(a[:9]+current))/10
-	    if(sum1 < sum2 and one_more_two_flag or sum1 > sum2 and not one_more_two_flag):
-	    	send_email(sum1)
-	    	one_more_two_flag = sum1 > sum2
-	    time.sleep(REQUEST_RATE)
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	t=datetime.datetime.now()
+	if(datetime.time(10, 0, 0) < datetime.time(t.hour, t.minute, t.second) < datetime.time(18, 40, 0)): # work day
+		current = get_price()
+		sum1 = float(sum(a[:4]+current))/5
+		sum2 = float(sum(a[:9]+current))/10
+		if(sum1 < sum2 and one_more_two_flag or sum1 > sum2 and not one_more_two_flag):
+			send_email(sum1)
+			one_more_two_flag = sum1 > sum2
+		time.sleep(REQUEST_RATE)
