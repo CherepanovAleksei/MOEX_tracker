@@ -25,7 +25,7 @@ def send_email(sum1):
     server.ehlo()
     server.login(my_yandex_mail,yandex_pass)
     message = 'Subject: {}\n\n{}'.format(title,msg)
-    server.sendmail(my_yandex_mail,send_to_email,message)
+    server.sendmail(my_yandex_mail, send_to_email, message.encode('utf-8'))
     server.quit()
     print('E-mails successfully sent!')
 
