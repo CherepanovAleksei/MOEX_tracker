@@ -23,9 +23,9 @@ def send_email(sum1):
     msg = "In "+kurs_name+" charts have intersected with average amount:"+str(sum1)+".\n\nWatch site: "+kurs_url+"\n"
     server = smtplib.SMTP_SSL('smtp.yandex.ru', 465)
     server.ehlo()
-    server.login(yandex_mail,yandex_pass)
+    server.login(my_yandex_mail,yandex_pass)
     message = 'Subject: {}\n\n{}'.format(title,msg)
-    server.sendmail(yandex_mail,send_to_email,message)
+    server.sendmail(my_yandex_mail,send_to_email,message)
     server.quit()
     print('E-mails successfully sent!')
 
