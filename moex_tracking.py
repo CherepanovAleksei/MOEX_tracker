@@ -15,6 +15,7 @@ import smtplib
 import requests
 import re
 import datetime
+import time 
 
 def send_email(sum1):
     print("Try to send email")
@@ -56,7 +57,7 @@ while (True):
         time.sleep(REQUEST_RATE)
     else:
         if(day_open):
-            print("Close day: " + str(current))
             closed_days = [current]+closed_days
             closed_days.pop()
+            print("closed_days=" + str(closed_days))
             day_open = False
